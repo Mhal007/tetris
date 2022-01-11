@@ -1,4 +1,4 @@
-import { CELL_SIZE } from './const'
+import { CELL_SIZE } from '../consts'
 
 class Block {
   constructor (x, y, color) {

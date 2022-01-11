@@ -3,10 +3,9 @@ import Sketch from 'react-p5'
 
 import Board from './Board'
 import Setup from './Setup'
-import { CELL_SIZE, HEIGHT_CELLS, WIDTH_CELLS } from './const'
+import { CYCLE, CELL_SIZE, HEIGHT_CELLS, WIDTH_CELLS } from './consts'
 
 let tick = 0;
-let cycle = 10;
 let board = new Board(CELL_SIZE);
 let _P5_;
 
@@ -21,7 +20,7 @@ const Engine = () => {
   const draw = (p5) => {
     tick++;
 
-    if (tick % cycle === 0) {
+    if (tick % CYCLE === 0) {
       try {
         board.advance(p5);
       } catch (error) {
@@ -32,6 +31,16 @@ const Engine = () => {
   };
 
   const keyPressed = (event) => {
+    if (event.key === 'r') {
+      onReset();
+    } else if (event.key === ' ') {
+      if (isPaused) {
+        onResume();
+      } else {
+        onPause();
+      }
+    }
+
     if (isPaused) {
       return;
     }

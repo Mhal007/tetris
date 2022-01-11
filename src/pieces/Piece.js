@@ -1,12 +1,16 @@
-import { CELL_SIZE, FINAL_Y_COORDINATE } from './const'
+import { CELL_SIZE, FINAL_Y_COORDINATE, WIDTH_CELLS } from '../consts'
+import { getBlocksFromStructure } from './utils'
 
 class Piece {
   constructor (p5, board) {
-    this.board = board;
     this.blocks = [];
-    this.originalPlacement = true;
+    this.board = board;
+    this.color = p5.color('black');
     this.isPlaced = false;
-    this.isRotated = false;
+    this.rotations = 0;
+    this.xRelative = 0;
+    this.yRelative = 0;
+    this.structure = [[[]]];
   }
 
   collapse (p5) {
@@ -41,7 +45,7 @@ class Piece {
     if (pieceCantMove) {
       this.setPlaced(true);
 
-      if (this.originalPlacement) {
+      if (this.yRelative === 0) {
         throw new Error('game over');
       }
       return false;
@@ -50,9 +54,22 @@ class Piece {
         block.move(p5, 'down')
       });
 
-      this.originalPlacement = false;
+      this.yRelative += 1;
       return true;
     }
+  }
+
+  initiateBlocks () {
+    const xShift = Math.floor(WIDTH_CELLS / 2) + this.xRelative - 1;
+    const yShift = this.yRelative;
+
+    this.blocks = getBlocksFromStructure(
+      this.structure,
+      xShift,
+      yShift,
+      this.rotations,
+      this.color
+    );
   }
 
   onKeyPressed (key) {
@@ -80,7 +97,8 @@ class Piece {
   }
 
   rotate (p5) {
-    // Each piece should implement it
+    this.rotations += 1;
+    this.initiateBlocks();
   }
 
   setPlaced (newPlaced) {
@@ -91,6 +109,8 @@ class Piece {
     this.blocks.forEach(block => {
       block.move(p5, direction)
     });
+
+    this.xRelative += direction === 'right' ? 1 : -1;
   }
 
   wouldOverlap(otherPieces) {
