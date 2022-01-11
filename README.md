@@ -3,7 +3,7 @@ p5.js implementation of the Tetris
 
 * TODO
   * Piece rotation collision detection
-  * Piece 'slide' collision detection
+  * Holding keys fix
   * Timer
   * Blocks as Borders
   * Levels

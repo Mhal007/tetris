@@ -109,6 +109,18 @@ class Piece {
   }
 
   slide (direction) {
+    if (direction === 'left') {
+      // Left side collision detection
+      if (this.blocks.some(block => block.x === 0)) {
+        return;
+      }
+    } else if (direction === 'right') {
+      // Right side collision detection
+      if (this.blocks.some(block => block.x === CELL_SIZE * (WIDTH_CELLS - 1))) {
+        return;
+      }
+    }
+
     this.blocks.forEach(block => {
       block.move(direction)
     });
