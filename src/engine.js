@@ -22,19 +22,14 @@ const Engine = () => {
         board.advance(p5);
       } catch {
         p5.noLoop();
-        alert('game over')
+        console.log('!!!!!!!!!!!!!!!! game over')
       }
     }
   };
 
   const keyPressed = (event) => {
-    if (event.key === 'ArrowLeft') {
-      board.slidePiece(p5, 'left')
-    } else if (event.key === 'ArrowRight') {
-      board.slidePiece(p5, 'right')
-    }
-
-    console.log('pressed ', key)
+    const fallingPiece = board.getFallingPiece();
+    fallingPiece.onKeyPressed(event.key);
   }
 
   return <Sketch keyPressed={keyPressed} draw={draw} setup={setup} />;

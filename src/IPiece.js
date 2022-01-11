@@ -1,6 +1,6 @@
 import Block from './Block'
 import Piece from './Piece'
-import { BASE_SIZE } from './const'
+import { BASE_SIZE, FINAL_Y_COORDINATE } from './const'
 
 class IPiece extends Piece {
   constructor (p5) {

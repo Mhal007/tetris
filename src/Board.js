@@ -1,7 +1,6 @@
 import NPiece from './NPiece'
 import OPiece from './OPiece'
 import IPiece from './IPiece'
-import { BASE_SIZE } from './const'
 
 class Board {
   constructor(baseSize) {
@@ -12,7 +11,6 @@ class Board {
 
     this.width = 10 * baseSize;
     this.length = 20 * baseSize;
-    this.finalYCoordinate = 20 * baseSize;
   }
 
   advance(p5) {
@@ -24,41 +22,23 @@ class Board {
       this.spawnNewPiece(p5);
     }
 
-
     this.pieces.forEach((piece, index) => {
       piece.draw(p5);
 
-      if (!piece.isPlaced) {
+      const pieceIsFalling = !piece.isPlaced;
+      if (pieceIsFalling) {
         const otherPieces = this.pieces.slice(0, index).concat(
           this.pieces.slice(index + 1, this.pieces.length)
         );
 
-        const wouldOverlap = this.pieceWouldOverlap(piece, otherPieces);
-        const reachedBottom = this.pieceReachedBottom(piece);
-        const pieceCantMove = wouldOverlap || reachedBottom;
-
-        if (pieceCantMove) {
-          piece.setPlaced(true);
-
-          if (piece.originalPlacement) {
-            throw new Error('game over');
-          }
-
-          this.shouldSpawnNewPiece = true;
-        } else {
-          piece.move(p5, 'down');
-        }
+        const result = piece.fall(p5, otherPieces);
+        this.shouldSpawnNewPiece = !result;
       }
     });
   }
 
   getFallingPiece() {
     return this.pieces.find(piece => !piece.isPlaced);
-  }
-
-  slidePiece(p5, direction) {
-    const fallingPiece = this.getFallingPiece();
-    fallingPiece.move(p5, direction)
   }
 
   spawnNewPiece(p5) {
@@ -80,22 +60,6 @@ class Board {
 
     this.pieces.push(newPiece);
     this.shouldSpawnNewPiece = false;
-  }
-
-  pieceReachedBottom(piece) {
-    return piece.blocks.some(block => {
-      return block.y + BASE_SIZE === this.finalYCoordinate;
-    });
-  }
-
-  pieceWouldOverlap(piece, otherPieces) {
-    return piece.blocks.some(block => {
-      return otherPieces.some(otherPiece => {
-        return otherPiece.blocks.some(otherBlock => {
-          return otherBlock.x === block.x && otherBlock.y === block.y + BASE_SIZE;
-        })
-      })
-    })
   }
 }
 

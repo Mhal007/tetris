@@ -14,6 +14,9 @@ class Block {
   }
 
   move (p5, direction) {
+    console.log('p5', p5);
+    console.log('direction', direction);
+
     if (direction === 'left') {
       this.x -= BASE_SIZE;
     } else if (direction === 'right') {
