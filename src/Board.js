@@ -16,8 +16,6 @@ class Board {
   advance(p5) {
     p5.background('pink');
 
-    console.log(this.pieces);
-
     if (this.shouldSpawnNewPiece) {
       this.spawnNewPiece(p5);
     }
@@ -27,11 +25,7 @@ class Board {
 
       const pieceIsFalling = !piece.isPlaced;
       if (pieceIsFalling) {
-        const otherPieces = this.pieces.slice(0, index).concat(
-          this.pieces.slice(index + 1, this.pieces.length)
-        );
-
-        const result = piece.fall(p5, otherPieces);
+        const result = piece.fall(p5);
         this.shouldSpawnNewPiece = !result;
       }
     });
@@ -41,6 +35,10 @@ class Board {
     return this.pieces.find(piece => !piece.isPlaced);
   }
 
+  getPlacedPieces() {
+    return this.pieces.filter(piece => piece.isPlaced);
+  }
+
   spawnNewPiece(p5) {
     const pieceKinds = ['i', 'n', 'o'];
     const randomizedPiece = pieceKinds[Math.round(Math.random() * (pieceKinds.length - 1))];
@@ -48,13 +46,13 @@ class Board {
     let newPiece;
     switch (randomizedPiece) {
       case 'i':
-        newPiece = new IPiece(p5);
+        newPiece = new IPiece(p5, this);
         break;
       case 'n':
-        newPiece = new NPiece(p5);
+        newPiece = new NPiece(p5, this);
         break;
       case 'o':
-        newPiece = new OPiece(p5);
+        newPiece = new OPiece(p5, this);
         break;
     }
 

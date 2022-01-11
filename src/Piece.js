@@ -1,7 +1,8 @@
 import { BASE_SIZE, FINAL_Y_COORDINATE } from './const'
 
 class Piece {
-  constructor () {
+  constructor (p5, board) {
+    this.board = board;
     this.blocks = [];
     this.originalPlacement = true;
     this.isPlaced = false;
@@ -21,12 +22,13 @@ class Piece {
     this.blocks.forEach(block => block.draw(p5));
   }
 
-  fall (p5, otherPieces) {
+  fall (p5) {
     if (this.isPlaced) {
-      console.log('piece is already placed!')
+      console.error('piece is already placed!')
       return;
     }
 
+    const otherPieces = this.board.getPlacedPieces();
     const wouldOverlap = this.wouldOverlap(otherPieces);
     const reachedBottom = this.didReachBottom();
     const pieceCantMove = wouldOverlap || reachedBottom;

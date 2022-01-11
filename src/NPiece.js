@@ -3,8 +3,8 @@ import Piece from './Piece'
 import { BASE_SIZE } from './const'
 
 class NPiece extends Piece {
-  constructor (p5) {
-    super();
+  constructor (p5, board) {
+    super(p5, board);
 
     this.color = p5.color('green');
 
