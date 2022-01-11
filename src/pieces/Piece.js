@@ -72,7 +72,7 @@ class Piece {
     );
   }
 
-  onKeyPressed (key, p5) {
+  onKeyPressed (key) {
     switch (key) {
       case 'ArrowLeft': {
         this.slide('left')
@@ -88,7 +88,6 @@ class Piece {
       }
       case 'ArrowDown': {
         this.collapse()
-        this.board.advance(p5)
         break;
       }
       default: {

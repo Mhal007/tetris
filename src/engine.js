@@ -6,6 +6,7 @@ import Setup from './Setup'
 import { CELL_SIZE, CYCLE, HEIGHT_CELLS, WIDTH_CELLS } from './consts'
 
 let tick = 0;
+let timeSinceLastCycle = 0;
 let board = new Board(CELL_SIZE);
 let _P5_;
 
@@ -19,10 +20,12 @@ const Engine = () => {
 
   const draw = (p5) => {
     tick++;
+    timeSinceLastCycle++;
 
-    if (tick % CYCLE === 0) {
+    if (timeSinceLastCycle >= CYCLE) {
       try {
         board.advance(p5);
+        timeSinceLastCycle = 0;
       } catch (error) {
         p5.noLoop();
         console.error(error);
@@ -41,6 +44,8 @@ const Engine = () => {
       } else {
         onPause();
       }
+    } else if (event.key === 'ArrowDown') {
+      timeSinceLastCycle = CYCLE;
     }
 
     if (isPaused) {
@@ -48,7 +53,7 @@ const Engine = () => {
     }
 
     const fallingPiece = board.getFallingPiece();
-    fallingPiece?.onKeyPressed(event.key, _P5_);
+    fallingPiece?.onKeyPressed(event.key);
   }
 
   const onPause = () => {

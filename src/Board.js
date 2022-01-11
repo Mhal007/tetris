@@ -47,6 +47,7 @@ class Board {
   }
 
   spawnNewPiece(p5) {
+    // TODO optimise
     const pieceKinds = ['i', 'j', 'l', 'o', 's', 't', 'z'];
     const randomizedPiece = pieceKinds[Math.round(Math.random() * (pieceKinds.length - 1))];
 
