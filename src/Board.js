@@ -5,6 +5,7 @@ import OPiece from './pieces/OPiece'
 import SPiece from './pieces/SPiece'
 import TPiece from './pieces/TPiece'
 import ZPiece from './pieces/ZPiece'
+import { CELL_SIZE, HEIGHT_CELLS } from './consts'
 
 class Board {
   constructor() {
@@ -18,8 +19,30 @@ class Board {
     }
 
     const fallingPiece = this.getFallingPiece();
-    const result = fallingPiece.fall();
-    this.shouldSpawnNewPiece = !result;
+    const pieceHaveMoved = fallingPiece.fall();
+    this.shouldSpawnNewPiece = !pieceHaveMoved;
+
+    this.checkForLines();
+  }
+
+  checkForLines () {
+    const placedPieces = this.pieces.filter(piece => piece.isPlaced);
+    const allBlocks = placedPieces.flatMap(piece => piece.blocks);
+    console.log('allBlocks', allBlocks);
+
+    for (let y = 0; y < HEIGHT_CELLS; y++) {
+      const thisRowBlocks = allBlocks.filter(block => block.y === y * CELL_SIZE);
+
+      if (thisRowBlocks.length === 10) {
+        thisRowBlocks.forEach(block => {
+          block.piece.removeBlock(block.x, block.y);
+          // TODO check if it's being removed by the GC
+        });
+
+        const allBlocksAbove = allBlocks.filter(block => block.y < y * CELL_SIZE);
+        allBlocksAbove.forEach(block => block.move('down'))
+      }
+    }
   }
 
   draw(p5) {

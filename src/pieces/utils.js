@@ -2,7 +2,12 @@ import Block from './Block'
 
 import { CELL_SIZE } from '../consts'
 
-export const getBlocksFromStructure = (structure, xShift, yShift, rotations, color) => {
+export const getBlocksFromStructure = (
+  piece,
+  xShift,
+  yShift
+) => {
+  const { color, rotations, structure } = piece;
   const rotationIndex = rotations % structure.length;
 
   const blocks = [];
@@ -21,6 +26,7 @@ export const getBlocksFromStructure = (structure, xShift, yShift, rotations, col
       if (cell === 1) {
         blocks.push(
           new Block(
+            piece,
             (cellRelativeX + xShift) * CELL_SIZE,
             (cellRelativeY + yShift) * CELL_SIZE,
             color

@@ -64,11 +64,9 @@ class Piece {
     const yShift = this.yRelative - 1;
 
     this.blocks = getBlocksFromStructure(
-      this.structure,
+      this,
       xShift,
       yShift,
-      this.rotations,
-      this.color
     );
   }
 
@@ -94,6 +92,10 @@ class Piece {
         return;
       }
     }
+  }
+
+  removeBlock (blockX, blockY) {
+    this.blocks = this.blocks.filter(block => block.x !== blockX || block.y !== blockY)
   }
 
   rotate () {

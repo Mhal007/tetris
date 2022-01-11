@@ -1,7 +1,8 @@
 import { CELL_SIZE } from '../consts'
 
 class Block {
-  constructor (x, y, color) {
+  constructor (piece, x, y, color) {
+    this.piece = piece;
     this.x = x;
     this.y = y;
     this.color = color;
