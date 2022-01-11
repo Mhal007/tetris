@@ -39,6 +39,10 @@ class Board {
     return this.pieces.filter(piece => piece.isPlaced);
   }
 
+  setShouldSpawnNewPiece (newShouldSpawnNewPiece) {
+    this.shouldSpawnNewPiece = newShouldSpawnNewPiece;
+  }
+
   spawnNewPiece(p5) {
     const pieceKinds = ['i', 'n', 'o'];
     const randomizedPiece = pieceKinds[Math.round(Math.random() * (pieceKinds.length - 1))];

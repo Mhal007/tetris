@@ -9,7 +9,11 @@ class Piece {
   }
 
   collapse (p5) {
+    while (!this.isPlaced) {
+      this.fall(p5);
+    }
 
+    this.board.setShouldSpawnNewPiece(true);
   }
 
   didReachBottom() {
