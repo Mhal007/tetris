@@ -13,7 +13,7 @@ class Piece {
       this.fall(p5);
     }
 
-    this.board.setShouldSpawnNewPiece(true);
+    this.board.shouldSpawnNewPiece = true;
   }
 
   didReachBottom() {
@@ -79,7 +79,7 @@ class Piece {
   }
 
   rotate (p5) {
-
+    // Each piece should implement it
   }
 
   setPlaced (newPlaced) {

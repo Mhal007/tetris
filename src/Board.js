@@ -7,7 +7,7 @@ class Board {
     this.baseSize = baseSize;
 
     this.pieces = [];
-    this.shouldSpawnNewPiece = true;
+    this._shouldSpawnNewPiece = true;
 
     this.width = 10 * baseSize;
     this.length = 20 * baseSize;
@@ -39,8 +39,12 @@ class Board {
     return this.pieces.filter(piece => piece.isPlaced);
   }
 
-  setShouldSpawnNewPiece (newShouldSpawnNewPiece) {
-    this.shouldSpawnNewPiece = newShouldSpawnNewPiece;
+  get shouldSpawnNewPiece () {
+    return this._shouldSpawnNewPiece;
+  }
+
+  set shouldSpawnNewPiece (newShouldSpawnNewPiece) {
+    this._shouldSpawnNewPiece = newShouldSpawnNewPiece;
   }
 
   spawnNewPiece(p5) {

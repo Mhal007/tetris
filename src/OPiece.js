@@ -15,6 +15,10 @@ class OPiece extends Piece {
       new Block(BASE_SIZE * 5, BASE_SIZE, this.color),
     ]
   }
+
+  rotate (p5) {
+    // Nothing
+  }
 }
 
 export default OPiece
