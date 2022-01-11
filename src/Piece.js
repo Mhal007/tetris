@@ -9,19 +9,21 @@ class Piece {
     this.isPlaced = newPlaced;
   }
 
-  draw () {
-    this.blocks.forEach(block => block.draw());
+  draw (p5) {
+    this.blocks.forEach(block => block.draw(p5));
   }
 
-  move () {
+  move (p5) {
     if (this.isPlaced) {
       return;
     }
 
     this.blocks.forEach(block => {
-      block.move()
+      block.move(p5)
     });
 
     this.originalPlacement = false;
   }
 }
+
+export default Piece;

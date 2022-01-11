@@ -1,3 +1,8 @@
+import NPiece from './NPiece'
+import OPiece from './OPiece'
+import IPiece from './IPiece'
+import { BASE_SIZE } from './const'
+
 class Board {
   constructor(baseSize) {
     this.baseSize = baseSize;
@@ -10,18 +15,18 @@ class Board {
     this.finalYCoordinate = 20 * baseSize;
   }
 
-  advance() {
-    background('pink');
+  advance(p5) {
+    p5.background('pink');
 
     console.log(this.pieces);
 
     if (this.shouldSpawnNewPiece) {
-      this.spawnNewPiece();
+      this.spawnNewPiece(p5);
     }
 
 
     this.pieces.forEach((piece, index) => {
-      piece.draw();
+      piece.draw(p5);
 
       if (!piece.isPlaced) {
         const otherPieces = this.pieces.slice(0, index).concat(
@@ -41,26 +46,26 @@ class Board {
 
           this.shouldSpawnNewPiece = true;
         } else {
-          piece.move();
+          piece.move(p5);
         }
       }
     });
   }
 
-  spawnNewPiece() {
+  spawnNewPiece(p5) {
     const pieceKinds = ['i', 'n', 'o'];
     const randomizedPiece = pieceKinds[Math.round(Math.random() * (pieceKinds.length - 1))];
 
     let newPiece;
     switch (randomizedPiece) {
       case 'i':
-        newPiece = new IPiece();
+        newPiece = new IPiece(p5);
         break;
       case 'n':
-        newPiece = new NPiece();
+        newPiece = new NPiece(p5);
         break;
       case 'o':
-        newPiece = new OPiece();
+        newPiece = new OPiece(p5);
         break;
     }
 
@@ -70,7 +75,7 @@ class Board {
 
   pieceReachedBottom(piece) {
     return piece.blocks.some(block => {
-      return block.y + baseSize === this.finalYCoordinate;
+      return block.y + BASE_SIZE === this.finalYCoordinate;
     });
   }
 
@@ -78,9 +83,11 @@ class Board {
     return piece.blocks.some(block => {
       return otherPieces.some(otherPiece => {
         return otherPiece.blocks.some(otherBlock => {
-          return otherBlock.x === block.x && otherBlock.y === block.y + baseSize;
+          return otherBlock.x === block.x && otherBlock.y === block.y + BASE_SIZE;
         })
       })
     })
   }
 }
+
+export default Board;
