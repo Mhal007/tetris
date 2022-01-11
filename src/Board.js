@@ -46,10 +46,19 @@ class Board {
 
           this.shouldSpawnNewPiece = true;
         } else {
-          piece.move(p5);
+          piece.move(p5, 'down');
         }
       }
     });
+  }
+
+  getFallingPiece() {
+    return this.pieces.find(piece => !piece.isPlaced);
+  }
+
+  slidePiece(p5, direction) {
+    const fallingPiece = this.getFallingPiece();
+    fallingPiece.move(p5, direction)
   }
 
   spawnNewPiece(p5) {

@@ -13,8 +13,14 @@ class Block {
     p5.square(this.x, this.y, BASE_SIZE);
   }
 
-  move () {
-    this.y += BASE_SIZE;
+  move (p5, direction) {
+    if (direction === 'left') {
+      this.x -= BASE_SIZE;
+    } else if (direction === 'right') {
+      this.x += BASE_SIZE;
+    } else if (direction === 'down') {
+      this.y += BASE_SIZE;
+    }
   }
 }
 

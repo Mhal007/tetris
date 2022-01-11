@@ -27,7 +27,17 @@ const Engine = () => {
     }
   };
 
-  return <Sketch setup={setup} draw={draw} />;
+  const keyPressed = (event) => {
+    if (event.key === 'ArrowLeft') {
+      board.slidePiece(p5, 'left')
+    } else if (event.key === 'ArrowRight') {
+      board.slidePiece(p5, 'right')
+    }
+
+    console.log('pressed ', key)
+  }
+
+  return <Sketch keyPressed={keyPressed} draw={draw} setup={setup} />;
 };
 
 export default Engine;
