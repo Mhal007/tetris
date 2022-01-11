@@ -1,6 +1,7 @@
-import ZPiece from './pieces/ZPiece'
-import OPiece from './pieces/OPiece'
 import IPiece from './pieces/IPiece'
+import OPiece from './pieces/OPiece'
+import SPiece from './pieces/SPiece'
+import ZPiece from './pieces/ZPiece'
 
 class Board {
   constructor() {
@@ -21,7 +22,7 @@ class Board {
   draw(p5) {
     p5.background('pink');
 
-    this.pieces.forEach((piece, index) => {
+    this.pieces.forEach(piece => {
       piece.draw(p5);
     });
   }
@@ -43,7 +44,7 @@ class Board {
   }
 
   spawnNewPiece(p5) {
-    const pieceKinds = ['i', 'n', 'o'];
+    const pieceKinds = ['i', 'o', 's', 'z'];
     const randomizedPiece = pieceKinds[Math.round(Math.random() * (pieceKinds.length - 1))];
 
     let newPiece;
@@ -51,11 +52,14 @@ class Board {
       case 'i':
         newPiece = new IPiece(p5, this);
         break;
-      case 'n':
-        newPiece = new ZPiece(p5, this);
-        break;
       case 'o':
         newPiece = new OPiece(p5, this);
+        break;
+      case 's':
+        newPiece = new SPiece(p5, this);
+        break;
+      case 'z':
+        newPiece = new ZPiece(p5, this);
         break;
     }
 

@@ -5,7 +5,7 @@ class ZPiece extends Piece {
   constructor (p5, board) {
     super(p5, board);
 
-    this.color = p5.color('green');
+    this.color = p5.color('red');
     this.structure = PIECE_Z_STRUCTURE;
     super.initiateBlocks();
   }
