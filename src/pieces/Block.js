@@ -13,7 +13,7 @@ class Block {
     p5.square(this.x, this.y, CELL_SIZE);
   }
 
-  move (p5, direction) {
+  move (direction) {
     if (direction === 'left') {
       this.x -= CELL_SIZE;
     } else if (direction === 'right') {

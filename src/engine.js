@@ -3,7 +3,7 @@ import Sketch from 'react-p5'
 
 import Board from './Board'
 import Setup from './Setup'
-import { CYCLE, CELL_SIZE, HEIGHT_CELLS, WIDTH_CELLS } from './consts'
+import { CELL_SIZE, CYCLE, HEIGHT_CELLS, WIDTH_CELLS } from './consts'
 
 let tick = 0;
 let board = new Board(CELL_SIZE);
@@ -28,6 +28,8 @@ const Engine = () => {
         console.error(error);
       }
     }
+
+    board.draw(p5);
   };
 
   const keyPressed = (event) => {
@@ -46,7 +48,7 @@ const Engine = () => {
     }
 
     const fallingPiece = board.getFallingPiece();
-    fallingPiece?.onKeyPressed(event.key);
+    fallingPiece?.onKeyPressed(event.key, _P5_);
   }
 
   const onPause = () => {

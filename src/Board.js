@@ -8,21 +8,21 @@ class Board {
     this._shouldSpawnNewPiece = true;
   }
 
-  advance(p5) {
-    p5.background('pink');
-
+  advance (p5) {
     if (this.shouldSpawnNewPiece) {
       this.spawnNewPiece(p5);
     }
 
+    const fallingPiece = this.getFallingPiece();
+    const result = fallingPiece.fall();
+    this.shouldSpawnNewPiece = !result;
+  }
+
+  draw(p5) {
+    p5.background('pink');
+
     this.pieces.forEach((piece, index) => {
       piece.draw(p5);
-
-      const pieceIsFalling = !piece.isPlaced;
-      if (pieceIsFalling) {
-        const result = piece.fall(p5);
-        this.shouldSpawnNewPiece = !result;
-      }
     });
   }
 

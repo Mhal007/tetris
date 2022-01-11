@@ -13,9 +13,9 @@ class Piece {
     this.structure = [[[]]];
   }
 
-  collapse (p5) {
+  collapse () {
     while (!this.isPlaced) {
-      this.fall(p5);
+      this.fall();
     }
 
     this.board.shouldSpawnNewPiece = true;
@@ -31,7 +31,7 @@ class Piece {
     this.blocks.forEach(block => block.draw(p5));
   }
 
-  fall (p5) {
+  fall () {
     if (this.isPlaced) {
       console.error('piece is already placed!')
       return;
@@ -51,7 +51,7 @@ class Piece {
       return false;
     } else {
       this.blocks.forEach(block => {
-        block.move(p5, 'down')
+        block.move('down')
       });
 
       this.yRelative += 1;
@@ -72,22 +72,23 @@ class Piece {
     );
   }
 
-  onKeyPressed (key) {
+  onKeyPressed (key, p5) {
     switch (key) {
       case 'ArrowLeft': {
-        this.slide(p5, 'left')
+        this.slide('left')
         break;
       }
       case 'ArrowRight': {
-        this.slide(p5, 'right')
+        this.slide('right')
         break;
       }
       case 'ArrowUp': {
-        this.rotate(p5)
+        this.rotate()
         break;
       }
       case 'ArrowDown': {
-        this.collapse(p5)
+        this.collapse()
+        this.board.advance(p5)
         break;
       }
       default: {
@@ -96,7 +97,7 @@ class Piece {
     }
   }
 
-  rotate (p5) {
+  rotate () {
     this.rotations += 1;
     this.initiateBlocks();
   }
@@ -105,9 +106,9 @@ class Piece {
     this.isPlaced = newPlaced;
   }
 
-  slide (p5, direction) {
+  slide (direction) {
     this.blocks.forEach(block => {
-      block.move(p5, direction)
+      block.move(direction)
     });
 
     this.xRelative += direction === 'right' ? 1 : -1;
