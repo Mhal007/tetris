@@ -61,7 +61,7 @@ class Piece {
 
   initiateBlocks () {
     const xShift = Math.floor(WIDTH_CELLS / 2) + this.xRelative - 1;
-    const yShift = this.yRelative;
+    const yShift = this.yRelative - 1;
 
     this.blocks = getBlocksFromStructure(
       this.structure,
