@@ -1,5 +1,6 @@
 import IPiece from './pieces/IPiece'
 import JPiece from './pieces/JPiece'
+import LPiece from './pieces/LPiece'
 import OPiece from './pieces/OPiece'
 import SPiece from './pieces/SPiece'
 import ZPiece from './pieces/ZPiece'
@@ -45,7 +46,7 @@ class Board {
   }
 
   spawnNewPiece(p5) {
-    const pieceKinds = ['i', 'j', 'o', 's', 'z'];
+    const pieceKinds = ['i', 'j', 'l', 'o', 's', 'z'];
     const randomizedPiece = pieceKinds[Math.round(Math.random() * (pieceKinds.length - 1))];
 
     let newPiece;
@@ -55,6 +56,9 @@ class Board {
         break;
       case 'j':
         newPiece = new JPiece(p5, this);
+        break;
+      case 'l':
+        newPiece = new LPiece(p5, this);
         break;
       case 'o':
         newPiece = new OPiece(p5, this);
