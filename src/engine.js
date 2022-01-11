@@ -1,16 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Sketch from 'react-p5'
 
 import Board from './Board'
+import Setup from './Setup'
 import { BASE_SIZE } from './const'
 
 let tick = 0;
-let cycle = 3;
-
-const board = new Board(BASE_SIZE);
+let cycle = 10;
+let board = new Board(BASE_SIZE);
+let _P5_;
 
 const Engine = () => {
+  const [isPaused, setIsPaused] = useState(false);
+
   const setup = (p5, canvasParentRef) => {
+    _P5_ = p5;
     p5.createCanvas(10 * BASE_SIZE, 20 * BASE_SIZE).parent(canvasParentRef);
   };
 
@@ -28,11 +32,35 @@ const Engine = () => {
   };
 
   const keyPressed = (event) => {
+    if (isPaused) {
+      return;
+    }
+
     const fallingPiece = board.getFallingPiece();
     fallingPiece?.onKeyPressed(event.key);
   }
 
-  return <Sketch keyPressed={keyPressed} draw={draw} setup={setup} />;
+  const onPause = () => {
+    _P5_?.noLoop();
+    setIsPaused(true);
+  }
+
+  const onResume = () => {
+    _P5_?.loop();
+    setIsPaused(false);
+  }
+
+  const onReset = () => {
+    board = new Board(BASE_SIZE);
+    onResume();
+  }
+
+  return (
+    <>
+      <Sketch keyPressed={keyPressed} draw={draw} setup={setup} />
+      <Setup isPaused={isPaused} onPause={onPause} onResume={onResume} onReset={onReset} />
+    </>
+  )
 };
 
 export default Engine;
