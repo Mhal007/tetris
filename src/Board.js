@@ -8,9 +8,11 @@ import ZPiece from './pieces/ZPiece'
 import { CELL_SIZE, HEIGHT_CELLS } from './consts'
 
 class Board {
-  constructor() {
+  constructor(onPiecePlaced, onLinesCleared) {
     this.pieces = [];
     this._shouldSpawnNewPiece = true;
+    this.onPiecePlaced = onPiecePlaced;
+    this.onLinesCleared = onLinesCleared;
   }
 
   advance (p5) {
@@ -22,6 +24,10 @@ class Board {
     const pieceHaveMoved = fallingPiece.fall();
     this.shouldSpawnNewPiece = !pieceHaveMoved;
 
+    if (!pieceHaveMoved) {
+      this.onPiecePlaced();
+    }
+
     this.checkForLines();
   }
 
@@ -30,6 +36,7 @@ class Board {
     const allBlocks = placedPieces.flatMap(piece => piece.blocks);
     console.log('allBlocks', allBlocks);
 
+    let linesCleared = 0;
     for (let y = 0; y < HEIGHT_CELLS; y++) {
       const thisRowBlocks = allBlocks.filter(block => block.y === y * CELL_SIZE);
 
@@ -41,7 +48,13 @@ class Board {
 
         const allBlocksAbove = allBlocks.filter(block => block.y < y * CELL_SIZE);
         allBlocksAbove.forEach(block => block.move('down'))
+
+        linesCleared++;
       }
+    }
+    
+    if (linesCleared) {
+      this.onLinesCleared(linesCleared);
     }
   }
 

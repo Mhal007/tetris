@@ -86,6 +86,7 @@ class Piece {
       }
       case 'ArrowDown': {
         this.collapse()
+        this.board.onPiecePlaced();
         break;
       }
       default: {
