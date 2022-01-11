@@ -1,4 +1,4 @@
-import { BASE_SIZE } from './const'
+import { CELL_SIZE } from './const'
 
 class Block {
   constructor (x, y, color) {
@@ -10,16 +10,19 @@ class Block {
   draw (p5) {
     p5.fill(this.color);
     p5.stroke('black');
-    p5.square(this.x, this.y, BASE_SIZE);
+    p5.square(this.x, this.y, CELL_SIZE);
   }
 
   move (p5, direction) {
     if (direction === 'left') {
-      this.x -= BASE_SIZE;
+      this.x -= CELL_SIZE;
     } else if (direction === 'right') {
-      this.x += BASE_SIZE;
+      this.x += CELL_SIZE;
     } else if (direction === 'down') {
-      this.y += BASE_SIZE;
+      this.y += CELL_SIZE;
+    } else if (direction === 'up') {
+      // Used for rotation only
+      this.y -= CELL_SIZE;
     }
   }
 }

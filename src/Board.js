@@ -1,16 +1,11 @@
-import NPiece from './NPiece'
-import OPiece from './OPiece'
-import IPiece from './IPiece'
+import ZPiece from './pieces/ZPiece'
+import OPiece from './pieces/OPiece'
+import IPiece from './pieces/IPiece'
 
 class Board {
-  constructor(baseSize) {
-    this.baseSize = baseSize;
-
+  constructor() {
     this.pieces = [];
     this._shouldSpawnNewPiece = true;
-
-    this.width = 10 * baseSize;
-    this.length = 20 * baseSize;
   }
 
   advance(p5) {
@@ -57,7 +52,7 @@ class Board {
         newPiece = new IPiece(p5, this);
         break;
       case 'n':
-        newPiece = new NPiece(p5, this);
+        newPiece = new ZPiece(p5, this);
         break;
       case 'o':
         newPiece = new OPiece(p5, this);

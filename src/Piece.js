@@ -1,4 +1,4 @@
-import { BASE_SIZE, FINAL_Y_COORDINATE } from './const'
+import { CELL_SIZE, FINAL_Y_COORDINATE } from './const'
 
 class Piece {
   constructor (p5, board) {
@@ -6,6 +6,7 @@ class Piece {
     this.blocks = [];
     this.originalPlacement = true;
     this.isPlaced = false;
+    this.isRotated = false;
   }
 
   collapse (p5) {
@@ -18,7 +19,7 @@ class Piece {
 
   didReachBottom() {
     return this.blocks.some(block => {
-      return block.y + BASE_SIZE === FINAL_Y_COORDINATE;
+      return block.y + CELL_SIZE === FINAL_Y_COORDINATE;
     });
   }
 
@@ -96,7 +97,7 @@ class Piece {
     return this.blocks.some(block => {
       return otherPieces.some(otherPiece => {
         return otherPiece.blocks.some(otherBlock => {
-          return otherBlock.x === block.x && otherBlock.y === block.y + BASE_SIZE;
+          return otherBlock.x === block.x && otherBlock.y === block.y + CELL_SIZE;
         })
       })
     })

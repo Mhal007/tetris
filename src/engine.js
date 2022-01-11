@@ -3,11 +3,11 @@ import Sketch from 'react-p5'
 
 import Board from './Board'
 import Setup from './Setup'
-import { BASE_SIZE } from './const'
+import { CELL_SIZE, HEIGHT_CELLS, WIDTH_CELLS } from './const'
 
 let tick = 0;
 let cycle = 10;
-let board = new Board(BASE_SIZE);
+let board = new Board(CELL_SIZE);
 let _P5_;
 
 const Engine = () => {
@@ -15,7 +15,7 @@ const Engine = () => {
 
   const setup = (p5, canvasParentRef) => {
     _P5_ = p5;
-    p5.createCanvas(10 * BASE_SIZE, 20 * BASE_SIZE).parent(canvasParentRef);
+    p5.createCanvas(WIDTH_CELLS * CELL_SIZE, HEIGHT_CELLS * CELL_SIZE).parent(canvasParentRef);
   };
 
   const draw = (p5) => {
@@ -51,7 +51,7 @@ const Engine = () => {
   }
 
   const onReset = () => {
-    board = new Board(BASE_SIZE);
+    board = new Board(CELL_SIZE);
     onResume();
   }
 
