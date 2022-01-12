@@ -1,5 +1,5 @@
 const { merge } = require('webpack-merge');
-const common = require('./webpack.common.config.js');
+const common = require('./webpack.config.common.js');
 
 module.exports = merge(common, {
   mode: 'development',
@@ -7,4 +7,12 @@ module.exports = merge(common, {
   devServer: {
     static: './dist',
   },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+    ]
+  }
 });
