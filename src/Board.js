@@ -21,7 +21,7 @@ class Board {
     }
 
     const fallingPiece = this.getFallingPiece();
-    const pieceHaveMoved = fallingPiece.fall();
+    const pieceHaveMoved = fallingPiece?.fall();
     this.shouldSpawnNewPiece = !pieceHaveMoved;
 
     if (!pieceHaveMoved) {
@@ -52,7 +52,7 @@ class Board {
         linesCleared++;
       }
     }
-    
+
     if (linesCleared) {
       this.onLinesCleared(linesCleared);
     }
