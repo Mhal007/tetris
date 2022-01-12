@@ -109,14 +109,34 @@ class Piece {
   }
 
   slide (direction) {
+    const otherPiecesBlocks = this.board.getPlacedPieces().flatMap(piece => piece.blocks);
+
     if (direction === 'left') {
-      // Left side collision detection
+      // Border collision detection
       if (this.blocks.some(block => block.x === 0)) {
         return;
       }
+
+      // Other pieces collision detection
+      if (this.blocks.some(block => {
+        return otherPiecesBlocks.some(otherPieceBlock =>
+          otherPieceBlock.x === block.x - CELL_SIZE && otherPieceBlock.y === block.y
+        )
+      })) {
+        return;
+      }
     } else if (direction === 'right') {
-      // Right side collision detection
+      // Border collision detection
       if (this.blocks.some(block => block.x === CELL_SIZE * (WIDTH_CELLS - 1))) {
+        return;
+      }
+
+      // Other pieces collision detection
+      if (this.blocks.some(block => {
+        return otherPiecesBlocks.some(otherPieceBlock =>
+          otherPieceBlock.x === block.x + CELL_SIZE && otherPieceBlock.y === block.y
+        )
+      })) {
         return;
       }
     }

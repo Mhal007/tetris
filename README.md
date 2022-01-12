@@ -10,3 +10,7 @@ p5.js implementation of the Tetris
   * Points for soft/hard dropping
   * Game Scale (slider?)
   * Soft dropping (?)
+  * TypeScript
+  * ESLint
+  * Prettier
+
