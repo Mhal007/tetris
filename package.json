@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack --config=webpack.config.prod.js",
     "build-dev": "webpack --config=webpack.config.dev.js",
-    "start": "webpack-dev-server --config=webpack.config.dev.js --open",
+    "dev": "webpack-dev-server --config=webpack.config.dev.js --open",
+    "start": "node src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -28,6 +29,7 @@
     "babel-preset-react": "6.24.1",
     "clean-webpack-plugin": "4.0.0",
     "css-loader": "6.5.1",
+    "express": "4.17.2",
     "html-webpack-plugin": "5.5.0",
     "mini-css-extract-plugin": "2.4.6",
     "react": "17.0.2",
