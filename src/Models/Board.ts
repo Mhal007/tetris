@@ -2,21 +2,44 @@ import { p5InstanceExtensions } from 'p5';
 
 import { CELL_SIZE, HEIGHT_CELLS } from '../consts';
 import { PIECE_SET_STANDARD } from '../pieces/tetrominos';
+import { PIECE_SET_TROMINOS } from '../pieces/trominos';
+import { PieceSet } from '../pieces/types';
 import Piece from './Piece';
+
+type Mode =
+  | 'monominos'
+  | 'dominos'
+  | 'trominos'
+  | 'tetrominos'
+  | 'pentominos'
+  | 'hexominos';
 
 class Board {
   readonly pieces: Piece[];
+  readonly pieceSet: PieceSet;
   readonly onLinesCleared: (linesCleared: number) => void;
   readonly onPiecePlaced: () => void;
 
   _shouldSpawnNewPiece: boolean;
 
   constructor(
+    mode: Mode,
     onPiecePlaced: () => void,
     onLinesCleared: (linesCleared: number) => void,
   ) {
-    this.pieces = [];
     this._shouldSpawnNewPiece = true;
+    this.pieces = [];
+
+    switch (mode) {
+      case 'trominos': {
+        this.pieceSet = PIECE_SET_TROMINOS;
+        break;
+      }
+      default: {
+        this.pieceSet = PIECE_SET_STANDARD;
+      }
+    }
+
     this.onPiecePlaced = onPiecePlaced;
     this.onLinesCleared = onLinesCleared;
   }
@@ -93,9 +116,7 @@ class Board {
 
   spawnNewPiece() {
     const randomizedPiece =
-      PIECE_SET_STANDARD[
-        Math.round(Math.random() * (PIECE_SET_STANDARD.length - 1))
-      ];
+      this.pieceSet[Math.round(Math.random() * (this.pieceSet.length - 1))];
 
     const newPiece = new Piece(
       this,

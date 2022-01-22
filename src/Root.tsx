@@ -55,7 +55,7 @@ const Root = () => {
   );
 
   const resetBoard = useCallback(() => {
-    setBoard(new Board(onPiecePlaced, onLinesCleared));
+    setBoard(new Board('trominos', onPiecePlaced, onLinesCleared));
   }, [onLinesCleared, onPiecePlaced]);
 
   useEffect(() => {
