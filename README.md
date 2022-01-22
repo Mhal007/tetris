@@ -5,8 +5,6 @@ https://mw-tetris.herokuapp.com/
 
 
 * TODO
-  * Add monominos
-  * Add dominos
   * Add pentominos
   * Add hexaminos
   * Holding keys fix
