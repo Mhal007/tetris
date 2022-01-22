@@ -4,6 +4,8 @@ import { Dropdown } from 'semantic-ui-react';
 import { GAME_MODES } from './consts';
 import { GameModeName } from './pieces/types';
 
+import './Settings.scss';
+
 type SettingsProps = {
   gameModeName: GameModeName;
   setGameModeName: (newGameModeName: GameModeName) => void;
@@ -17,16 +19,19 @@ const options = GAME_MODES.map(gameMode => ({
 
 const Settings = ({ gameModeName, setGameModeName }: SettingsProps) => {
   return (
-    <Dropdown
-      options={options}
-      selection
-      value={gameModeName}
-      onChange={(event, data) => {
-        setGameModeName(data.value as GameModeName);
-        // focusing the game
-        document.querySelector('canvas')?.click();
-      }}
-    />
+    <div className="settings-container">
+      Piece set:
+      <Dropdown
+        options={options}
+        selection
+        value={gameModeName}
+        onChange={(event, data) => {
+          setGameModeName(data.value as GameModeName);
+          // focusing the game
+          document.querySelector('canvas')?.click();
+        }}
+      />
+    </div>
   );
 };
 
