@@ -114,7 +114,7 @@ class Piece {
       this.fall();
     }
 
-    this.board.shouldSpawnNewPiece = true;
+    this.board._shouldSpawnNewPiece = true;
   }
 
   draw(p5: p5InstanceExtensions) {

@@ -76,7 +76,7 @@ const Root = () => {
 
     if (timeSinceLastCycle >= CYCLE) {
       try {
-        board?.advance(p5);
+        board?.advance();
         timeSinceLastCycle = 0;
       } catch (error) {
         p5.noLoop();

@@ -1,13 +1,13 @@
 import { p5InstanceExtensions } from 'p5';
 
 import { CELL_SIZE, HEIGHT_CELLS } from '../consts';
-import { PIECE_SET_STANDARD } from '../pieces/standard';
+import { PIECE_SET_STANDARD } from '../pieces/tetrominos';
 import Piece from './Piece';
 
 class Board {
   readonly pieces: Piece[];
-  readonly onPiecePlaced: () => void;
   readonly onLinesCleared: (linesCleared: number) => void;
+  readonly onPiecePlaced: () => void;
 
   _shouldSpawnNewPiece: boolean;
 
@@ -21,9 +21,17 @@ class Board {
     this.onLinesCleared = onLinesCleared;
   }
 
-  advance(p5: p5InstanceExtensions) {
+  get shouldSpawnNewPiece() {
+    return this._shouldSpawnNewPiece;
+  }
+
+  set shouldSpawnNewPiece(newShouldSpawnNewPiece) {
+    this._shouldSpawnNewPiece = newShouldSpawnNewPiece;
+  }
+
+  advance() {
     if (this.shouldSpawnNewPiece) {
-      this.spawnNewPiece(p5);
+      this.spawnNewPiece();
     }
 
     const fallingPiece = this.getFallingPiece();
@@ -83,15 +91,7 @@ class Board {
     return this.pieces.filter(piece => piece.isPlaced);
   }
 
-  get shouldSpawnNewPiece() {
-    return this._shouldSpawnNewPiece;
-  }
-
-  set shouldSpawnNewPiece(newShouldSpawnNewPiece) {
-    this._shouldSpawnNewPiece = newShouldSpawnNewPiece;
-  }
-
-  spawnNewPiece(p5: p5InstanceExtensions) {
+  spawnNewPiece() {
     const randomizedPiece =
       PIECE_SET_STANDARD[
         Math.round(Math.random() * (PIECE_SET_STANDARD.length - 1))
