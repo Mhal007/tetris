@@ -7,6 +7,8 @@
     "build": "webpack --config=webpack.config.prod.js",
     "build-dev": "webpack --config=webpack.config.dev.js",
     "dev": "webpack-dev-server --config=webpack.config.dev.js --open",
+    "lint": "eslint --ext js,jsx,ts,tsx .",
+    "lint-fix": "npm run lint -- --fix",
     "start": "node src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,17 +16,13 @@
     "type": "git",
     "url": "git+https://github.com/Mhal007/tetris.git"
   },
-  "author": "",
+  "author": "Michał Weskida",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Mhal007/tetris/issues"
   },
   "homepage": "https://github.com/Mhal007/tetris#readme",
   "dependencies": {
-    "@babel/core": "7.16.7",
-    "@babel/plugin-proposal-class-properties": "7.16.7",
-    "@babel/preset-env": "7.16.8",
-    "@babel/preset-react": "7.16.7",
     "babel-loader": "8.2.3",
     "babel-preset-react": "6.24.1",
     "clean-webpack-plugin": "4.0.0",
@@ -42,10 +40,37 @@
     "sass-loader": "12.4.0",
     "semantic-ui-css": "2.4.1",
     "semantic-ui-react": "2.0.4",
-    "style-loader": "3.3.1",
+    "ts-loader": "9.2.6",
     "webpack": "5.65.0",
     "webpack-cli": "4.9.1",
     "webpack-dev-server": "4.7.2",
     "webpack-merge": "5.8.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.16.10",
+    "@babel/eslint-parser": "7.16.5",
+    "@babel/eslint-plugin": "7.16.5",
+    "@babel/plugin-proposal-class-properties": "7.16.7",
+    "@babel/preset-env": "7.16.11",
+    "@babel/preset-react": "7.16.7",
+    "@types/node": "17.0.10",
+    "@types/react": "17.0.38",
+    "@types/react-dom": "17.0.11",
+    "@typescript-eslint/eslint-plugin": "4.33.0",
+    "@typescript-eslint/parser": "4.33.0",
+    "eslint": "7.32.0",
+    "eslint-config-prettier": "7.2.0",
+    "eslint-config-vazco": "6.2.0",
+    "eslint-plugin-babel": "5.3.1",
+    "eslint-plugin-eslint-comments": "3.2.0",
+    "eslint-plugin-import": "2.25.3",
+    "eslint-plugin-jsx-a11y": "6.5.1",
+    "eslint-plugin-prettier": "3.4.1",
+    "eslint-plugin-react": "7.27.1",
+    "eslint-plugin-react-hooks": "4.3.0",
+    "eslint-plugin-vazco": "1.0.0",
+    "husky": "7.0.4",
+    "prettier": "2.5.1",
+    "style-loader": "3.3.1"
   }
 }

@@ -1,8 +1,8 @@
-import { CELL_SIZE, FINAL_Y_COORDINATE, WIDTH_CELLS } from '../consts'
-import { getBlocksFromStructure } from '../utils'
+import { CELL_SIZE, FINAL_Y_COORDINATE, WIDTH_CELLS } from '../consts';
+import { getBlocksFromStructure } from '../utils';
 
 class Piece {
-  constructor (p5, board, type, color, structure) {
+  constructor(p5, board, type, color, structure) {
     this.blocks = [];
     this.board = board;
     this.color = color;
@@ -16,7 +16,7 @@ class Piece {
     this.initiateBlocks();
   }
 
-  collapse () {
+  collapse() {
     while (!this.isPlaced) {
       this.fall();
     }
@@ -30,13 +30,13 @@ class Piece {
     });
   }
 
-  draw (p5) {
+  draw(p5) {
     this.blocks.forEach(block => block.draw(p5));
   }
 
-  fall () {
+  fall() {
     if (this.isPlaced) {
-      console.error('piece is already placed!')
+      console.error('piece is already placed!');
       return;
     }
 
@@ -52,43 +52,38 @@ class Piece {
         throw new Error('game over');
       }
       return false;
-    } else {
-      this.blocks.forEach(block => {
-        block.move('down')
-      });
-
-      this.yRelative += 1;
-      return true;
     }
+    this.blocks.forEach(block => {
+      block.move('down');
+    });
+
+    this.yRelative += 1;
+    return true;
   }
 
-  initiateBlocks () {
+  initiateBlocks() {
     const xShift = Math.floor(WIDTH_CELLS / 2) + this.xRelative - 1;
     const yShift = this.yRelative - 1;
 
-    this.blocks = getBlocksFromStructure(
-      this,
-      xShift,
-      yShift,
-    );
+    this.blocks = getBlocksFromStructure(this, xShift, yShift);
   }
 
-  onKeyPressed (key) {
+  onKeyPressed(key) {
     switch (key) {
       case 'ArrowLeft': {
-        this.slide('left')
+        this.slide('left');
         break;
       }
       case 'ArrowRight': {
-        this.slide('right')
+        this.slide('right');
         break;
       }
       case 'ArrowUp': {
-        this.rotate()
+        this.rotate();
         break;
       }
       case 'ArrowDown': {
-        this.collapse()
+        this.collapse();
         this.board.onPiecePlaced();
         break;
       }
@@ -98,21 +93,25 @@ class Piece {
     }
   }
 
-  removeBlock (blockX, blockY) {
-    this.blocks = this.blocks.filter(block => block.x !== blockX || block.y !== blockY)
+  removeBlock(blockX, blockY) {
+    this.blocks = this.blocks.filter(
+      block => block.x !== blockX || block.y !== blockY,
+    );
   }
 
-  rotate () {
+  rotate() {
     this.rotations += 1;
     this.initiateBlocks();
   }
 
-  setPlaced (newPlaced) {
+  setPlaced(newPlaced) {
     this.isPlaced = newPlaced;
   }
 
-  slide (direction) {
-    const otherPiecesBlocks = this.board.getPlacedPieces().flatMap(piece => piece.blocks);
+  slide(direction) {
+    const otherPiecesBlocks = this.board
+      .getPlacedPieces()
+      .flatMap(piece => piece.blocks);
 
     if (direction === 'left') {
       // Border collision detection
@@ -121,31 +120,41 @@ class Piece {
       }
 
       // Other pieces collision detection
-      if (this.blocks.some(block => {
-        return otherPiecesBlocks.some(otherPieceBlock =>
-          otherPieceBlock.x === block.x - CELL_SIZE && otherPieceBlock.y === block.y
-        )
-      })) {
+      if (
+        this.blocks.some(block => {
+          return otherPiecesBlocks.some(
+            otherPieceBlock =>
+              otherPieceBlock.x === block.x - CELL_SIZE &&
+              otherPieceBlock.y === block.y,
+          );
+        })
+      ) {
         return;
       }
     } else if (direction === 'right') {
       // Border collision detection
-      if (this.blocks.some(block => block.x === CELL_SIZE * (WIDTH_CELLS - 1))) {
+      if (
+        this.blocks.some(block => block.x === CELL_SIZE * (WIDTH_CELLS - 1))
+      ) {
         return;
       }
 
       // Other pieces collision detection
-      if (this.blocks.some(block => {
-        return otherPiecesBlocks.some(otherPieceBlock =>
-          otherPieceBlock.x === block.x + CELL_SIZE && otherPieceBlock.y === block.y
-        )
-      })) {
+      if (
+        this.blocks.some(block => {
+          return otherPiecesBlocks.some(
+            otherPieceBlock =>
+              otherPieceBlock.x === block.x + CELL_SIZE &&
+              otherPieceBlock.y === block.y,
+          );
+        })
+      ) {
         return;
       }
     }
 
     this.blocks.forEach(block => {
-      block.move(direction)
+      block.move(direction);
     });
 
     this.xRelative += direction === 'right' ? 1 : -1;
@@ -155,10 +164,12 @@ class Piece {
     return this.blocks.some(block => {
       return otherPieces.some(otherPiece => {
         return otherPiece.blocks.some(otherBlock => {
-          return otherBlock.x === block.x && otherBlock.y === block.y + CELL_SIZE;
-        })
-      })
-    })
+          return (
+            otherBlock.x === block.x && otherBlock.y === block.y + CELL_SIZE
+          );
+        });
+      });
+    });
   }
 }
 

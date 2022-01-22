@@ -1,12 +1,7 @@
-import Block from './Models/Block'
+import Block from './Models/Block';
+import { CELL_SIZE } from './consts';
 
-import { CELL_SIZE } from './consts'
-
-export const getBlocksFromStructure = (
-  piece,
-  xShift,
-  yShift
-) => {
+export const getBlocksFromStructure = (piece, xShift, yShift) => {
   const { color, rotations, structure } = piece;
   const rotationIndex = rotations % structure.length;
 
@@ -29,12 +24,12 @@ export const getBlocksFromStructure = (
             piece,
             (cellRelativeX + xShift) * CELL_SIZE,
             (cellRelativeY + yShift) * CELL_SIZE,
-            color
+            color,
           ),
-        )
+        );
       }
     }
   }
 
   return blocks;
-}
+};

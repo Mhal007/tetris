@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import Sketch from 'react-p5'
+import React, { useCallback, useEffect, useState } from 'react';
+import Sketch from 'react-p5';
 
-import Board from './Models/Board'
-import ScoreBoard from './ScoreBoard'
-import Setup from './Setup'
-import { CELL_SIZE, CYCLE, HEIGHT_CELLS, WIDTH_CELLS } from './consts'
+import Board from './Models/Board';
+import ScoreBoard from './ScoreBoard';
+import Setup from './Setup';
+import { CELL_SIZE, CYCLE, HEIGHT_CELLS, WIDTH_CELLS } from './consts';
 
-import './Root.scss'
+import './Root.scss';
 
 let tick = 0;
 let timeSinceLastCycle = 0;
@@ -20,10 +20,10 @@ const Root = () => {
   const [time, setTime] = useState(0);
 
   const onPiecePlaced = useCallback(() => {
-    console.log('piece placed')
+    console.log('piece placed');
   }, []);
 
-  const onLinesCleared = useCallback((linesCleared) => {
+  const onLinesCleared = useCallback(linesCleared => {
     let pointsScored;
 
     switch (linesCleared) {
@@ -45,25 +45,25 @@ const Root = () => {
       }
     }
 
-    setScore((score) => score + pointsScored);
+    setScore(score => score + pointsScored);
   }, []);
 
   const resetBoard = () => {
-    setBoard(
-      new Board(onPiecePlaced, onLinesCleared)
-    );
-  }
+    setBoard(new Board(onPiecePlaced, onLinesCleared));
+  };
 
   useEffect(() => {
     resetBoard();
-  }, [])
+  }, []);
 
   const setup = (p5, canvasParentRef) => {
     _P5_ = p5;
-    p5.createCanvas(WIDTH_CELLS * CELL_SIZE, HEIGHT_CELLS * CELL_SIZE).parent(canvasParentRef);
+    p5.createCanvas(WIDTH_CELLS * CELL_SIZE, HEIGHT_CELLS * CELL_SIZE).parent(
+      canvasParentRef,
+    );
   };
 
-  const draw = (p5) => {
+  const draw = p5 => {
     tick++;
     timeSinceLastCycle++;
 
@@ -80,7 +80,7 @@ const Root = () => {
     board.draw(p5);
   };
 
-  const keyPressed = (event) => {
+  const keyPressed = event => {
     if (event.key === 'r') {
       onReset();
     } else if (event.key === ' ') {
@@ -99,36 +99,41 @@ const Root = () => {
 
     const fallingPiece = board.getFallingPiece();
     fallingPiece?.onKeyPressed(event.key);
-  }
+  };
 
   const onPause = () => {
     _P5_?.noLoop();
     setIsPaused(true);
-  }
+  };
 
   const onResume = () => {
     _P5_?.loop();
     setIsPaused(false);
-  }
+  };
 
   const onReset = () => {
     resetBoard();
     onResume();
-  }
+  };
 
   return (
     <div className="root-container">
       <div className="root-content">
         <div className="root-game">
           <Sketch keyPressed={keyPressed} draw={draw} setup={setup} />
-          <Setup isPaused={isPaused} onPause={onPause} onResume={onResume} onReset={onReset} />
+          <Setup
+            isPaused={isPaused}
+            onPause={onPause}
+            onResume={onResume}
+            onReset={onReset}
+          />
         </div>
         <div>
           <ScoreBoard level={level} score={score} />
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default Root;
