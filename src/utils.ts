@@ -6,9 +6,11 @@ export const getBlocksFromStructure = (
   piece: Piece,
   xShift: number,
   yShift: number,
+  afterRotation?: boolean,
 ) => {
   const { color, rotations, structure } = piece;
-  const rotationIndex = rotations % structure.length;
+  const rotationIndex =
+    (rotations + (afterRotation ? 1 : 0)) % structure.length;
 
   const blocks = [];
   const rotation = structure[rotationIndex];

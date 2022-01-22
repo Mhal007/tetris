@@ -1,6 +1,11 @@
 import { p5InstanceExtensions } from 'p5';
 
-import { CELL_SIZE, FINAL_Y_COORDINATE, WIDTH_CELLS } from '../consts';
+import {
+  CELL_SIZE,
+  FINAL_Y_COORDINATE,
+  HEIGHT_CELLS,
+  WIDTH_CELLS,
+} from '../consts';
 import { Structure } from '../pieces/types';
 import { getBlocksFromStructure } from '../utils';
 import Block from './Block';
@@ -29,7 +34,79 @@ class Piece {
     this.xRelative = 0;
     this.yRelative = 0;
 
-    this.initiateBlocks();
+    this.blocks = this.generateBlocks();
+  }
+
+  static wouldCollide(
+    blocks: Block[],
+    otherPieces: Piece[],
+    whenMovedDown?: boolean,
+  ) {
+    return blocks.some(block => {
+      return otherPieces.some(otherPiece => {
+        return otherPiece.blocks.some(otherBlock => {
+          return (
+            otherBlock.x === block.x &&
+            otherBlock.y === block.y + (whenMovedDown ? HEIGHT_CELLS : 0)
+          );
+        });
+      });
+    });
+  }
+
+  wouldCollideWhenMovedDown() {
+    const bottomWallCollision = this.blocks.some(block => {
+      return block.y + HEIGHT_CELLS === FINAL_Y_COORDINATE;
+    });
+
+    if (bottomWallCollision) {
+      return true;
+    }
+
+    const otherPieces = this.board.getPlacedPieces();
+    const otherPiecesCollision = Piece.wouldCollide(
+      this.blocks,
+      otherPieces,
+      true,
+    );
+
+    if (otherPiecesCollision) {
+      return true;
+    }
+
+    return false;
+  }
+
+  wouldCollideWhenRotated(newBlocks: Block[]) {
+    const leftWallCollision = newBlocks.some(newBlock => newBlock.x < 0);
+    if (leftWallCollision) {
+      return true;
+    }
+
+    const rightWallCollision = newBlocks.some(
+      newBlock => newBlock.x >= WIDTH_CELLS * CELL_SIZE,
+    );
+
+    if (rightWallCollision) {
+      return true;
+    }
+
+    const bottomWallCollision = newBlocks.some(block => {
+      return block.y === FINAL_Y_COORDINATE;
+    });
+
+    if (bottomWallCollision) {
+      return true;
+    }
+
+    const otherPieces = this.board.getPlacedPieces();
+    const otherPiecesCollision = Piece.wouldCollide(newBlocks, otherPieces);
+
+    if (otherPiecesCollision) {
+      return true;
+    }
+
+    return false;
   }
 
   collapse() {
@@ -38,12 +115,6 @@ class Piece {
     }
 
     this.board.shouldSpawnNewPiece = true;
-  }
-
-  didReachBottom() {
-    return this.blocks.some(block => {
-      return block.y + CELL_SIZE === FINAL_Y_COORDINATE;
-    });
   }
 
   draw(p5: p5InstanceExtensions) {
@@ -56,32 +127,29 @@ class Piece {
       return false;
     }
 
-    const otherPieces = this.board.getPlacedPieces();
-    const wouldOverlap = this.wouldOverlap(otherPieces);
-    const reachedBottom = this.didReachBottom();
-    const pieceCantMove = wouldOverlap || reachedBottom;
-
-    if (pieceCantMove) {
+    if (this.wouldCollideWhenMovedDown()) {
       this.setPlaced(true);
 
       if (this.yRelative === 0) {
         throw new Error('game over');
       }
+
       return false;
     }
+
     this.blocks.forEach(block => {
       block.move('down');
     });
-
     this.yRelative += 1;
+
     return true;
   }
 
-  initiateBlocks() {
+  generateBlocks(afterRotation?: boolean) {
     const xShift = Math.floor(WIDTH_CELLS / 2) + this.xRelative - 1;
     const yShift = this.yRelative - 1;
 
-    this.blocks = getBlocksFromStructure(this, xShift, yShift);
+    return getBlocksFromStructure(this, xShift, yShift, afterRotation);
   }
 
   onKeyPressed(key: string) {
@@ -116,8 +184,13 @@ class Piece {
   }
 
   rotate() {
+    const newBlocks = this.generateBlocks(true);
+    if (this.wouldCollideWhenRotated(newBlocks)) {
+      return;
+    }
+
     this.rotations += 1;
-    this.initiateBlocks();
+    this.blocks = newBlocks;
   }
 
   setPlaced(newPlaced: boolean) {
@@ -174,18 +247,6 @@ class Piece {
     });
 
     this.xRelative += direction === 'right' ? 1 : -1;
-  }
-
-  wouldOverlap(otherPieces: Piece[]) {
-    return this.blocks.some(block => {
-      return otherPieces.some(otherPiece => {
-        return otherPiece.blocks.some(otherBlock => {
-          return (
-            otherBlock.x === block.x && otherBlock.y === block.y + CELL_SIZE
-          );
-        });
-      });
-    });
   }
 }
 

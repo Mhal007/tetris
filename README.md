@@ -5,7 +5,6 @@ https://mw-tetris.herokuapp.com/
 
 
 * TODO
-  * Piece rotation collision detection
   * Holding keys fix
   * Timer
   * Blocks as Borders
