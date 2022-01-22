@@ -1,3 +1,5 @@
+import { PIECE_SET_DOMINOS } from './pieces/dominos';
+import { PIECE_SET_MONOMINOS } from './pieces/monominos';
 import { PIECE_SET_STANDARD } from './pieces/tetrominos';
 import { PIECE_SET_TROMINOS } from './pieces/trominos';
 
@@ -10,13 +12,13 @@ export const FINAL_Y_COORDINATE = HEIGHT_CELLS * CELL_SIZE;
 export const GAME_MODES = [
   {
     name: 'monominos',
-    pieceSet: PIECE_SET_STANDARD,
-    isDisabled: true,
+    pieceSet: PIECE_SET_MONOMINOS,
+    isDisabled: false,
   },
   {
     name: 'dominos',
-    pieceSet: PIECE_SET_STANDARD,
-    isDisabled: true,
+    pieceSet: PIECE_SET_DOMINOS,
+    isDisabled: false,
   },
   {
     name: 'trominos',
