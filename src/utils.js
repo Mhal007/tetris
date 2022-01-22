@@ -1,6 +1,6 @@
-import Block from './Block'
+import Block from './Models/Block'
 
-import { CELL_SIZE } from '../consts'
+import { CELL_SIZE } from './consts'
 
 export const getBlocksFromStructure = (
   piece,

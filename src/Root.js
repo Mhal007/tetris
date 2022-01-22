@@ -1,18 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import Sketch from 'react-p5'
 
-import Board from './Board'
+import Board from './Models/Board'
 import ScoreBoard from './ScoreBoard'
 import Setup from './Setup'
 import { CELL_SIZE, CYCLE, HEIGHT_CELLS, WIDTH_CELLS } from './consts'
 
-import './engine.scss'
+import './Root.scss'
 
 let tick = 0;
 let timeSinceLastCycle = 0;
 let _P5_;
 
-const Engine = () => {
+const Root = () => {
   const [board, setBoard] = useState();
   const [isPaused, setIsPaused] = useState(false);
   const [level, setLevel] = useState(0);
@@ -117,9 +117,9 @@ const Engine = () => {
   }
 
   return (
-    <div className="engine-container">
-      <div className="engine-content">
-        <div className="engine-game">
+    <div className="root-container">
+      <div className="root-content">
+        <div className="root-game">
           <Sketch keyPressed={keyPressed} draw={draw} setup={setup} />
           <Setup isPaused={isPaused} onPause={onPause} onResume={onResume} onReset={onReset} />
         </div>
@@ -131,4 +131,4 @@ const Engine = () => {
   )
 };
 
-export default Engine;
+export default Root;

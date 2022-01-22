@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './scoreboard.scss';
+import './ScoreBoard.scss';
 
 const ScoreBoard = ({ level, score }) => {
   return (

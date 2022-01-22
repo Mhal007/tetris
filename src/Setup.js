@@ -1,13 +1,14 @@
 import React from 'react'
+import { Button } from 'semantic-ui-react'
 
-import './setup.scss';
+import './Setup.scss';
 
 const Setup = ({ isPaused, onPause, onResume, onReset}) => {
   return (
     <div className="setup-container">
-      <button disabled={isPaused} onClick={onPause}>Pause</button>
-      <button disabled={!isPaused} onClick={onResume}>Resume</button>
-      <button onClick={onReset}>Reset</button>
+      <Button disabled={isPaused} primary onClick={onPause}>Pause</Button>
+      <Button disabled={!isPaused} primary onClick={onResume}>Resume</Button>
+      <Button secondary onClick={onReset}>Reset</Button>
     </div>
   )
 }

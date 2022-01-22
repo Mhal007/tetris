@@ -1,13 +1,13 @@
-.engine-container {
+.root-container {
   display: flex;
 }
 
-.engine-content {
+.root-content {
   display: flex;
   margin: auto;
 }
 
-.engine-game {
+.root-game {
   display: flex;
   flex-direction: column;
 }

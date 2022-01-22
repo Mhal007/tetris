@@ -1,16 +1,19 @@
 import { CELL_SIZE, FINAL_Y_COORDINATE, WIDTH_CELLS } from '../consts'
-import { getBlocksFromStructure } from './utils'
+import { getBlocksFromStructure } from '../utils'
 
 class Piece {
-  constructor (p5, board) {
+  constructor (p5, board, type, color, structure) {
     this.blocks = [];
     this.board = board;
-    this.color = p5.color('black');
+    this.color = color;
     this.isPlaced = false;
     this.rotations = 0;
+    this.structure = structure;
+    this.type = type;
     this.xRelative = 0;
     this.yRelative = 0;
-    this.structure = [[[]]];
+
+    this.initiateBlocks();
   }
 
   collapse () {
