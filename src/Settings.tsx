@@ -18,10 +18,13 @@ const options = GAME_MODES.map(gameMode => ({
 const Settings = ({ gameModeName, setGameModeName }: SettingsProps) => {
   return (
     <Dropdown
-      value={gameModeName}
       options={options}
+      selection
+      value={gameModeName}
       onChange={(event, data) => {
         setGameModeName(data.value as GameModeName);
+        // focusing the game
+        document.querySelector('canvas')?.click();
       }}
     />
   );

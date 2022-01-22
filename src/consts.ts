@@ -2,6 +2,7 @@ import { PIECE_SET_DOMINOS } from './pieces/dominos';
 import { PIECE_SET_MONOMINOS } from './pieces/monominos';
 import { PIECE_SET_STANDARD } from './pieces/tetrominos';
 import { PIECE_SET_TROMINOS } from './pieces/trominos';
+import { PieceSet } from './pieces/types';
 
 export const WIDTH_CELLS = 10;
 export const HEIGHT_CELLS = 20;
@@ -28,6 +29,16 @@ export const GAME_MODES = [
   {
     name: 'tetrominos',
     pieceSet: PIECE_SET_STANDARD,
+    isDisabled: false,
+  },
+  {
+    name: 'all mixed',
+    pieceSet: [
+      ...PIECE_SET_MONOMINOS,
+      ...PIECE_SET_DOMINOS,
+      ...PIECE_SET_TROMINOS,
+      ...PIECE_SET_STANDARD,
+    ] as PieceSet,
     isDisabled: false,
   },
   {

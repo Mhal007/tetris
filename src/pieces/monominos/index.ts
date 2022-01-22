@@ -4,7 +4,7 @@ import { PIECE_O_STRUCTURE } from './structure';
 export const PIECE_SET_MONOMINOS: PieceSet = [
   {
     type: 'O',
-    color: 'black',
+    color: 'brown',
     structure: PIECE_O_STRUCTURE,
   },
 ];
