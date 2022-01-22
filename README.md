@@ -12,7 +12,4 @@ https://mw-tetris.herokuapp.com/
   * Points for soft/hard dropping
   * Game Scale (slider?)
   * Soft dropping (?)
-  * TypeScript
-  * ESLint
-  * Prettier
 
