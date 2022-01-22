@@ -1,3 +1,4 @@
+import { p5InstanceExtensions } from 'p5';
 import React, { useCallback, useEffect, useState } from 'react';
 import Sketch from 'react-p5';
 
@@ -10,66 +11,72 @@ import './Root.scss';
 
 let tick = 0;
 let timeSinceLastCycle = 0;
-let _P5_;
+let _P5_: p5InstanceExtensions;
 
 const Root = () => {
-  const [board, setBoard] = useState();
+  const [board, setBoard] = useState<Board | undefined>();
   const [isPaused, setIsPaused] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [level, setLevel] = useState(0);
   const [score, setScore] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [time, setTime] = useState(0);
 
   const onPiecePlaced = useCallback(() => {
-    console.log('piece placed');
+    console.info('piece placed');
   }, []);
 
-  const onLinesCleared = useCallback(linesCleared => {
-    let pointsScored;
+  const onLinesCleared = useCallback(
+    linesCleared => {
+      let pointsScored: number;
 
-    switch (linesCleared) {
-      case 1: {
-        pointsScored = 40 * (level + 1);
-        break;
+      switch (linesCleared) {
+        case 1: {
+          pointsScored = 40 * (level + 1);
+          break;
+        }
+        case 2: {
+          pointsScored = 100 * (level + 1);
+          break;
+        }
+        case 3: {
+          pointsScored = 300 * (level + 1);
+          break;
+        }
+        case 4: {
+          pointsScored = 1200 * (level + 1);
+          break;
+        }
       }
-      case 2: {
-        pointsScored = 100 * (level + 1);
-        break;
-      }
-      case 3: {
-        pointsScored = 300 * (level + 1);
-        break;
-      }
-      case 4: {
-        pointsScored = 1200 * (level + 1);
-        break;
-      }
-    }
 
-    setScore(score => score + pointsScored);
-  }, []);
+      setScore(score => score + pointsScored);
+    },
+    [level],
+  );
 
-  const resetBoard = () => {
+  const resetBoard = useCallback(() => {
     setBoard(new Board(onPiecePlaced, onLinesCleared));
-  };
+  }, [onLinesCleared, onPiecePlaced]);
 
   useEffect(() => {
     resetBoard();
-  }, []);
+  }, [resetBoard]);
 
-  const setup = (p5, canvasParentRef) => {
+  const setup = (p5: p5InstanceExtensions, canvasParentRef: Element) => {
     _P5_ = p5;
     p5.createCanvas(WIDTH_CELLS * CELL_SIZE, HEIGHT_CELLS * CELL_SIZE).parent(
       canvasParentRef,
     );
   };
 
-  const draw = p5 => {
+  const draw = (p5: p5InstanceExtensions) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     tick++;
     timeSinceLastCycle++;
 
     if (timeSinceLastCycle >= CYCLE) {
       try {
-        board.advance(p5);
+        board?.advance(p5);
         timeSinceLastCycle = 0;
       } catch (error) {
         p5.noLoop();
@@ -77,10 +84,10 @@ const Root = () => {
       }
     }
 
-    board.draw(p5);
+    board?.draw(p5);
   };
 
-  const keyPressed = event => {
+  const keyPressed = (event: p5InstanceExtensions) => {
     if (event.key === 'r') {
       onReset();
     } else if (event.key === ' ') {
@@ -97,7 +104,7 @@ const Root = () => {
       return;
     }
 
-    const fallingPiece = board.getFallingPiece();
+    const fallingPiece = board?.getFallingPiece();
     fallingPiece?.onKeyPressed(event.key);
   };
 
@@ -120,6 +127,8 @@ const Root = () => {
     <div className="root-container">
       <div className="root-content">
         <div className="root-game">
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment -- p5 types misalignment */}
+          {/*// @ts-ignore */}
           <Sketch keyPressed={keyPressed} draw={draw} setup={setup} />
           <Setup
             isPaused={isPaused}

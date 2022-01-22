@@ -1,8 +1,24 @@
+import { p5InstanceExtensions } from 'p5';
+
 import { CELL_SIZE, FINAL_Y_COORDINATE, WIDTH_CELLS } from '../consts';
+import { Structure } from '../pieces/types';
 import { getBlocksFromStructure } from '../utils';
+import Block from './Block';
+import Board from './Board';
 
 class Piece {
-  constructor(p5, board, type, color, structure) {
+  readonly board: Board;
+  readonly color: string;
+  readonly structure: Structure;
+  readonly type: string;
+
+  blocks: Block[];
+  isPlaced: boolean;
+  rotations: number;
+  xRelative: number;
+  yRelative: number;
+
+  constructor(board: Board, type: string, color: string, structure: Structure) {
     this.blocks = [];
     this.board = board;
     this.color = color;
@@ -30,14 +46,14 @@ class Piece {
     });
   }
 
-  draw(p5) {
+  draw(p5: p5InstanceExtensions) {
     this.blocks.forEach(block => block.draw(p5));
   }
 
   fall() {
     if (this.isPlaced) {
       console.error('piece is already placed!');
-      return;
+      return false;
     }
 
     const otherPieces = this.board.getPlacedPieces();
@@ -68,7 +84,7 @@ class Piece {
     this.blocks = getBlocksFromStructure(this, xShift, yShift);
   }
 
-  onKeyPressed(key) {
+  onKeyPressed(key: string) {
     switch (key) {
       case 'ArrowLeft': {
         this.slide('left');
@@ -93,7 +109,7 @@ class Piece {
     }
   }
 
-  removeBlock(blockX, blockY) {
+  removeBlock(blockX: number, blockY: number) {
     this.blocks = this.blocks.filter(
       block => block.x !== blockX || block.y !== blockY,
     );
@@ -104,11 +120,11 @@ class Piece {
     this.initiateBlocks();
   }
 
-  setPlaced(newPlaced) {
+  setPlaced(newPlaced: boolean) {
     this.isPlaced = newPlaced;
   }
 
-  slide(direction) {
+  slide(direction: 'left' | 'right') {
     const otherPiecesBlocks = this.board
       .getPlacedPieces()
       .flatMap(piece => piece.blocks);
@@ -160,7 +176,7 @@ class Piece {
     this.xRelative += direction === 'right' ? 1 : -1;
   }
 
-  wouldOverlap(otherPieces) {
+  wouldOverlap(otherPieces: Piece[]) {
     return this.blocks.some(block => {
       return otherPieces.some(otherPiece => {
         return otherPiece.blocks.some(otherBlock => {

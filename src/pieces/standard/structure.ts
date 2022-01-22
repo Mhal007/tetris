@@ -1,5 +1,7 @@
 // I
-export const PIECE_I_STRUCTURE = [
+import { Structure } from '../types';
+
+export const PIECE_I_STRUCTURE: Structure = [
   [
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
@@ -21,7 +23,7 @@ export const PIECE_I_STRUCTURE = [
 ];
 
 // J
-export const PIECE_J_STRUCTURE = [
+export const PIECE_J_STRUCTURE: Structure = [
   [
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
@@ -61,7 +63,7 @@ export const PIECE_J_STRUCTURE = [
 ];
 
 // L
-export const PIECE_L_STRUCTURE = [
+export const PIECE_L_STRUCTURE: Structure = [
   [
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
@@ -101,7 +103,7 @@ export const PIECE_L_STRUCTURE = [
 ];
 
 // O
-export const PIECE_O_STRUCTURE = [
+export const PIECE_O_STRUCTURE: Structure = [
   [
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
@@ -114,7 +116,7 @@ export const PIECE_O_STRUCTURE = [
 ];
 
 // S
-export const PIECE_S_STRUCTURE = [
+export const PIECE_S_STRUCTURE: Structure = [
   [
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
@@ -136,7 +138,7 @@ export const PIECE_S_STRUCTURE = [
 ];
 
 // T
-export const PIECE_T_STRUCTURE = [
+export const PIECE_T_STRUCTURE: Structure = [
   [
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
@@ -176,7 +178,7 @@ export const PIECE_T_STRUCTURE = [
 ];
 
 // Z
-export const PIECE_Z_STRUCTURE = [
+export const PIECE_Z_STRUCTURE: Structure = [
   [
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],

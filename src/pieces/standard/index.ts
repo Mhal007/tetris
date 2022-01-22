@@ -1,3 +1,4 @@
+import { PieceSet } from '../types';
 import {
   PIECE_I_STRUCTURE,
   PIECE_J_STRUCTURE,
@@ -8,7 +9,7 @@ import {
   PIECE_Z_STRUCTURE,
 } from './structure';
 
-export const PIECES = [
+export const PIECE_SET_STANDARD: PieceSet = [
   {
     type: 'I',
     color: 'lightblue',

@@ -3,7 +3,14 @@ import { Button } from 'semantic-ui-react';
 
 import './Setup.scss';
 
-const Setup = ({ isPaused, onPause, onResume, onReset }) => {
+type SetupProps = {
+  isPaused: boolean;
+  onPause: () => void;
+  onReset: () => void;
+  onResume: () => void;
+};
+
+const Setup = ({ isPaused, onPause, onReset, onResume }: SetupProps) => {
   return (
     <div className="setup-container">
       <Button disabled={isPaused} primary onClick={onPause}>

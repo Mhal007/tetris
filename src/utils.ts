@@ -1,7 +1,12 @@
 import Block from './Models/Block';
+import Piece from './Models/Piece';
 import { CELL_SIZE } from './consts';
 
-export const getBlocksFromStructure = (piece, xShift, yShift) => {
+export const getBlocksFromStructure = (
+  piece: Piece,
+  xShift: number,
+  yShift: number,
+) => {
   const { color, rotations, structure } = piece;
   const rotationIndex = rotations % structure.length;
 

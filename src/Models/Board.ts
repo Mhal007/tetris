@@ -1,16 +1,27 @@
+import { p5InstanceExtensions } from 'p5';
+
 import { CELL_SIZE, HEIGHT_CELLS } from '../consts';
-import { PIECES } from '../pieces/standard';
+import { PIECE_SET_STANDARD } from '../pieces/standard';
 import Piece from './Piece';
 
 class Board {
-  constructor(onPiecePlaced, onLinesCleared) {
+  readonly pieces: Piece[];
+  readonly onPiecePlaced: () => void;
+  readonly onLinesCleared: (linesCleared: number) => void;
+
+  _shouldSpawnNewPiece: boolean;
+
+  constructor(
+    onPiecePlaced: () => void,
+    onLinesCleared: (linesCleared: number) => void,
+  ) {
     this.pieces = [];
     this._shouldSpawnNewPiece = true;
     this.onPiecePlaced = onPiecePlaced;
     this.onLinesCleared = onLinesCleared;
   }
 
-  advance(p5) {
+  advance(p5: p5InstanceExtensions) {
     if (this.shouldSpawnNewPiece) {
       this.spawnNewPiece(p5);
     }
@@ -56,7 +67,7 @@ class Board {
     }
   }
 
-  draw(p5) {
+  draw(p5: p5InstanceExtensions) {
     p5.background('pink');
 
     this.pieces.forEach(piece => {
@@ -80,11 +91,13 @@ class Board {
     this._shouldSpawnNewPiece = newShouldSpawnNewPiece;
   }
 
-  spawnNewPiece(p5) {
+  spawnNewPiece(p5: p5InstanceExtensions) {
     const randomizedPiece =
-      PIECES[Math.round(Math.random() * (PIECES.length - 1))];
+      PIECE_SET_STANDARD[
+        Math.round(Math.random() * (PIECE_SET_STANDARD.length - 1))
+      ];
+
     const newPiece = new Piece(
-      p5,
       this,
       randomizedPiece.type,
       randomizedPiece.color,
