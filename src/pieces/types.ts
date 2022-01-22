@@ -1,3 +1,11 @@
+export type GameModeName =
+  | 'monominos'
+  | 'dominos'
+  | 'trominos'
+  | 'tetrominos'
+  | 'pentominos'
+  | 'hexominos';
+
 export type PieceSet = {
   type: string;
   color: string;

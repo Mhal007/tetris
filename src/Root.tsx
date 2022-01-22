@@ -4,8 +4,10 @@ import Sketch from 'react-p5';
 
 import Board from './Models/Board';
 import ScoreBoard from './ScoreBoard';
+import Settings from './Settings';
 import Setup from './Setup';
 import { CELL_SIZE, CYCLE, HEIGHT_CELLS, WIDTH_CELLS } from './consts';
+import { GameModeName } from './pieces/types';
 
 import './Root.scss';
 
@@ -18,6 +20,7 @@ const Root = () => {
   const [isPaused, setIsPaused] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [level, setLevel] = useState(0);
+  const [gameModeName, setGameModeName] = useState<GameModeName>('tetrominos');
   const [score, setScore] = useState(0);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [time, setTime] = useState(0);
@@ -55,8 +58,8 @@ const Root = () => {
   );
 
   const resetBoard = useCallback(() => {
-    setBoard(new Board('trominos', onPiecePlaced, onLinesCleared));
-  }, [onLinesCleared, onPiecePlaced]);
+    setBoard(new Board(gameModeName, onPiecePlaced, onLinesCleared));
+  }, [gameModeName, onLinesCleared, onPiecePlaced]);
 
   useEffect(() => {
     resetBoard();
@@ -126,7 +129,12 @@ const Root = () => {
   return (
     <div className="root-container">
       <div className="root-content">
-        <div className="root-settings">settings</div>
+        <div className="root-settings">
+          <Settings
+            gameModeName={gameModeName}
+            setGameModeName={setGameModeName}
+          />
+        </div>
         <div className="root-game">
           {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment -- p5 types misalignment */}
           {/*// @ts-ignore */}

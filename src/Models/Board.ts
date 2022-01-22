@@ -1,18 +1,8 @@
 import { p5InstanceExtensions } from 'p5';
 
-import { CELL_SIZE, HEIGHT_CELLS } from '../consts';
-import { PIECE_SET_STANDARD } from '../pieces/tetrominos';
-import { PIECE_SET_TROMINOS } from '../pieces/trominos';
-import { PieceSet } from '../pieces/types';
+import { CELL_SIZE, GAME_MODES, HEIGHT_CELLS } from '../consts';
+import { GameModeName, PieceSet } from '../pieces/types';
 import Piece from './Piece';
-
-type Mode =
-  | 'monominos'
-  | 'dominos'
-  | 'trominos'
-  | 'tetrominos'
-  | 'pentominos'
-  | 'hexominos';
 
 class Board {
   readonly pieces: Piece[];
@@ -23,22 +13,18 @@ class Board {
   _shouldSpawnNewPiece: boolean;
 
   constructor(
-    mode: Mode,
+    gameModeName: GameModeName,
     onPiecePlaced: () => void,
     onLinesCleared: (linesCleared: number) => void,
   ) {
     this._shouldSpawnNewPiece = true;
     this.pieces = [];
 
-    switch (mode) {
-      case 'trominos': {
-        this.pieceSet = PIECE_SET_TROMINOS;
-        break;
-      }
-      default: {
-        this.pieceSet = PIECE_SET_STANDARD;
-      }
-    }
+    const gameMode = GAME_MODES.find(
+      gameMode => gameMode.name === gameModeName,
+    );
+
+    this.pieceSet = gameMode!.pieceSet;
 
     this.onPiecePlaced = onPiecePlaced;
     this.onLinesCleared = onLinesCleared;
