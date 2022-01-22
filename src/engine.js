@@ -6,6 +6,8 @@ import ScoreBoard from './ScoreBoard'
 import Setup from './Setup'
 import { CELL_SIZE, CYCLE, HEIGHT_CELLS, WIDTH_CELLS } from './consts'
 
+import './engine.scss'
+
 let tick = 0;
 let timeSinceLastCycle = 0;
 let _P5_;
@@ -115,9 +117,9 @@ const Engine = () => {
   }
 
   return (
-    <div style={{ display: 'flex' }}>
-      <div style={{ display: 'flex', margin: 'auto' }}>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div className="engine-container">
+      <div className="engine-content">
+        <div className="engine-game">
           <Sketch keyPressed={keyPressed} draw={draw} setup={setup} />
           <Setup isPaused={isPaused} onPause={onPause} onResume={onResume} onReset={onReset} />
         </div>

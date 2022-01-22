@@ -1,9 +1,10 @@
 import React from 'react'
 
-const Setup = ({ isPaused, onPause, onResume, onReset}) => {
+import './setup.scss';
 
+const Setup = ({ isPaused, onPause, onResume, onReset}) => {
   return (
-    <div style={{ margin: '1em auto' }}>
+    <div className="setup-container">
       <button disabled={isPaused} onClick={onPause}>Pause</button>
       <button disabled={!isPaused} onClick={onResume}>Resume</button>
       <button onClick={onReset}>Reset</button>

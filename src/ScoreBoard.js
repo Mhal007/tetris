@@ -1,9 +1,10 @@
 import React from 'react'
 
-const ScoreBoard = ({ level, score }) => {
+import './scoreboard.scss';
 
+const ScoreBoard = ({ level, score }) => {
   return (
-    <div style={{ fontSize: '1.6em', margin: '2em'}}>
+    <div className="scoreboard-container">
       <div>
         Level: {level}
       </div>
