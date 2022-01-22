@@ -5,7 +5,10 @@ https://mw-tetris.herokuapp.com/
 
 
 * TODO
-  * Add other games types (polyominos different than tetrominos) 
+  * Add monominos
+  * Add dominos
+  * Add pentominos
+  * Add hexaminos
   * Holding keys fix
   * Timer
   * Blocks as Borders
