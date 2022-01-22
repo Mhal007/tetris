@@ -10,8 +10,8 @@ type ScoreBoardProps = {
 const ScoreBoard = ({ level, score }: ScoreBoardProps) => {
   return (
     <div className="scoreboard-container">
-      <div>Level: {level}</div>
-      <div>Score: {score}</div>
+      <p>Level: {level}</p>
+      <p>Score: {score}</p>
     </div>
   );
 };

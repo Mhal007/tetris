@@ -20,7 +20,7 @@ const options = GAME_MODES.map(gameMode => ({
 const Settings = ({ gameModeName, setGameModeName }: SettingsProps) => {
   return (
     <div className="settings-container">
-      Piece set:
+      <p>Piece set:</p>
       <Dropdown
         options={options}
         selection

@@ -7,6 +7,7 @@ import { PieceSet } from './pieces/types';
 export const HORIZONTAL_CELLS = 10;
 export const VERTICAL_CELLS = 20;
 export const CELL_SIZE = 28;
+export const CELL_ROUNDING = 3;
 export const CYCLE = 50;
 export const FINAL_Y_COORDINATE = VERTICAL_CELLS * CELL_SIZE;
 
