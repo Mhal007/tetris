@@ -1,6 +1,6 @@
 import { p5InstanceExtensions } from 'p5';
 
-import { CELL_SIZE, GAME_MODES, HEIGHT_CELLS } from '../consts';
+import { CELL_SIZE, GAME_MODES, VERTICAL_CELLS } from '../consts';
 import { GameModeName, PieceSet } from '../pieces/types';
 import Piece from './Piece';
 
@@ -59,7 +59,7 @@ class Board {
     const allBlocks = placedPieces.flatMap(piece => piece.blocks);
 
     let linesCleared = 0;
-    for (let y = 0; y < HEIGHT_CELLS; y++) {
+    for (let y = 0; y < VERTICAL_CELLS; y++) {
       const thisRowBlocks = allBlocks.filter(
         block => block.y === y * CELL_SIZE,
       );

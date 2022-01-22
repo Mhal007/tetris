@@ -1,11 +1,6 @@
 import { p5InstanceExtensions } from 'p5';
 
-import {
-  CELL_SIZE,
-  FINAL_Y_COORDINATE,
-  HEIGHT_CELLS,
-  WIDTH_CELLS,
-} from '../consts';
+import { CELL_SIZE, FINAL_Y_COORDINATE, HORIZONTAL_CELLS } from '../consts';
 import { Structure } from '../pieces/types';
 import { getBlocksFromStructure } from '../utils';
 import Block from './Block';
@@ -47,7 +42,7 @@ class Piece {
         return otherPiece.blocks.some(otherBlock => {
           return (
             otherBlock.x === block.x &&
-            otherBlock.y === block.y + (whenMovedDown ? HEIGHT_CELLS : 0)
+            otherBlock.y === block.y + (whenMovedDown ? CELL_SIZE : 0)
           );
         });
       });
@@ -56,7 +51,7 @@ class Piece {
 
   wouldCollideWhenMovedDown() {
     const bottomWallCollision = this.blocks.some(block => {
-      return block.y + HEIGHT_CELLS === FINAL_Y_COORDINATE;
+      return block.y + CELL_SIZE === FINAL_Y_COORDINATE;
     });
 
     if (bottomWallCollision) {
@@ -84,7 +79,7 @@ class Piece {
     }
 
     const rightWallCollision = newBlocks.some(
-      newBlock => newBlock.x >= WIDTH_CELLS * CELL_SIZE,
+      newBlock => newBlock.x >= HORIZONTAL_CELLS * CELL_SIZE,
     );
 
     if (rightWallCollision) {
@@ -146,7 +141,7 @@ class Piece {
   }
 
   generateBlocks(afterRotation?: boolean) {
-    const xShift = Math.floor(WIDTH_CELLS / 2) + this.xRelative - 1;
+    const xShift = Math.floor(HORIZONTAL_CELLS / 2) + this.xRelative - 1;
     const yShift = this.yRelative - 1;
 
     return getBlocksFromStructure(this, xShift, yShift, afterRotation);
@@ -198,6 +193,8 @@ class Piece {
   }
 
   slide(direction: 'left' | 'right') {
+    // TODO combine with Board methods
+
     const otherPiecesBlocks = this.board
       .getPlacedPieces()
       .flatMap(piece => piece.blocks);
@@ -223,7 +220,9 @@ class Piece {
     } else if (direction === 'right') {
       // Border collision detection
       if (
-        this.blocks.some(block => block.x === CELL_SIZE * (WIDTH_CELLS - 1))
+        this.blocks.some(
+          block => block.x === CELL_SIZE * (HORIZONTAL_CELLS - 1),
+        )
       ) {
         return;
       }

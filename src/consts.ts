@@ -4,11 +4,11 @@ import { PIECE_SET_STANDARD } from './pieces/tetrominos';
 import { PIECE_SET_TROMINOS } from './pieces/trominos';
 import { PieceSet } from './pieces/types';
 
-export const WIDTH_CELLS = 10;
-export const HEIGHT_CELLS = 20;
-export const CELL_SIZE = 20;
+export const HORIZONTAL_CELLS = 10;
+export const VERTICAL_CELLS = 20;
+export const CELL_SIZE = 28;
 export const CYCLE = 50;
-export const FINAL_Y_COORDINATE = HEIGHT_CELLS * CELL_SIZE;
+export const FINAL_Y_COORDINATE = VERTICAL_CELLS * CELL_SIZE;
 
 export const GAME_MODES = [
   {
