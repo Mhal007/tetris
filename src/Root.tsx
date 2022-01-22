@@ -126,20 +126,23 @@ const Root = () => {
   return (
     <div className="root-container">
       <div className="root-content">
+        <div className="root-settings">settings</div>
         <div className="root-game">
           {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment -- p5 types misalignment */}
           {/*// @ts-ignore */}
           <Sketch keyPressed={keyPressed} draw={draw} setup={setup} />
-          <Setup
-            isPaused={isPaused}
-            onPause={onPause}
-            onResume={onResume}
-            onReset={onReset}
-          />
         </div>
-        <div>
+        <div className="root-stats">
           <ScoreBoard level={level} score={score} />
         </div>
+      </div>
+      <div className="root-controls">
+        <Setup
+          isPaused={isPaused}
+          onPause={onPause}
+          onResume={onResume}
+          onReset={onReset}
+        />
       </div>
     </div>
   );
