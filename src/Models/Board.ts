@@ -1,6 +1,7 @@
 import { p5InstanceExtensions } from 'p5';
 
 import {
+  BOARD_PADDING,
   CELL_SIZE,
   GAME_MODES,
   HORIZONTAL_CELLS,
@@ -90,10 +91,15 @@ class Board {
   }
 
   draw(p5: p5InstanceExtensions) {
+    p5.background('black');
+
     p5.fill('pink');
-    p5.strokeWeight(2);
-    p5.stroke('black');
-    p5.rect(0, 0, HORIZONTAL_CELLS * CELL_SIZE, VERTICAL_CELLS * CELL_SIZE);
+    p5.rect(
+      BOARD_PADDING,
+      BOARD_PADDING,
+      HORIZONTAL_CELLS * CELL_SIZE,
+      VERTICAL_CELLS * CELL_SIZE,
+    );
 
     this.pieces.forEach(piece => {
       piece.draw(p5);

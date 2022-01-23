@@ -1,6 +1,11 @@
 import { p5InstanceExtensions } from 'p5';
 
-import { CELL_SIZE, CELL_ROUNDING } from '../consts';
+import {
+  BLOCK_ROUNDING,
+  BLOCK_SIZE,
+  BOARD_PADDING,
+  CELL_SIZE,
+} from '../consts';
 import Piece from './Piece';
 
 class Block {
@@ -19,8 +24,14 @@ class Block {
 
   draw(p5: p5InstanceExtensions) {
     p5.fill(this.color);
+    p5.strokeWeight(2);
     p5.stroke('black');
-    p5.square(this.x, this.y, CELL_SIZE, CELL_ROUNDING);
+    p5.square(
+      this.x + BOARD_PADDING,
+      this.y + BOARD_PADDING,
+      BLOCK_SIZE,
+      BLOCK_ROUNDING,
+    );
   }
 
   move(direction: 'left' | 'right' | 'down') {

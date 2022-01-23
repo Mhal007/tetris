@@ -6,7 +6,13 @@ import Board from './Models/Board';
 import ScoreBoard from './ScoreBoard';
 import Settings from './Settings';
 import Setup from './Setup';
-import { CELL_SIZE, CYCLE, HORIZONTAL_CELLS, VERTICAL_CELLS } from './consts';
+import {
+  BOARD_PADDING,
+  CELL_SIZE,
+  CYCLE,
+  HORIZONTAL_CELLS,
+  VERTICAL_CELLS,
+} from './consts';
 import { GameModeName } from './pieces/types';
 
 import './Root.scss';
@@ -68,8 +74,8 @@ const Root = () => {
   const setup = (p5: p5InstanceExtensions, canvasParentRef: Element) => {
     _P5_ = p5;
     p5.createCanvas(
-      HORIZONTAL_CELLS * CELL_SIZE,
-      VERTICAL_CELLS * CELL_SIZE,
+      HORIZONTAL_CELLS * CELL_SIZE + BOARD_PADDING * 2,
+      VERTICAL_CELLS * CELL_SIZE + BOARD_PADDING * 2,
     ).parent(canvasParentRef);
   };
 
